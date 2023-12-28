@@ -19,8 +19,8 @@ import time
 # Initialize model and draft model
 
 # model_directory = "/mnt/str/models/codellama-34b-instruct-exl2/4.0bpw"
-model_directory = "/mnt/str/models/_gptq/TheBloke_Phine-CodeLlama-34B-v2-GPTQ/"
-draft_directory = "/mnt/str/models/tinyllama-1b-ckpt503-exl2/3.5bpw"
+model_directory = "/home/thomas/Development/Projects/llm/Models/Starling-LM-7B-alpha-exl2-4bit"
+draft_directory = "/home/thomas/Development/Projects/llm/Models/TinyLlama-1.1B/TinyLlama-1.1B-intermediate-step-1195k-token-2.5T-exl2-8bpw/"
 
 model_config = ExLlamaV2Config()
 model_config.model_dir = model_directory
@@ -44,7 +44,7 @@ tokenizer = ExLlamaV2Tokenizer(model_config)
 # Initialize generators
 
 normal_generator = ExLlamaV2StreamingGenerator(model, model_cache, tokenizer)
-speculative_generator = ExLlamaV2StreamingGenerator(model, model_cache, tokenizer, draft, draft_cache, 5)
+speculative_generator = ExLlamaV2StreamingGenerator(model, model_cache, tokenizer, draft, draft_cache, 4)
 
 # Make sure CUDA is initialized so we can measure performance
 
@@ -58,17 +58,18 @@ def test_gen(generator, prompt, settings, max_new_tokens):
 
     input_ids = tokenizer.encode(prompt)
     prompt_tokens = input_ids.shape[-1]
-
+    print("finished encoding prompt")
     # Send prompt to generator to begin stream
 
     time_begin_prompt = time.time()
 
     print (prompt, end = "")
     sys.stdout.flush()
-
     generator.set_stop_conditions([])
+    print()
+    print("generating")
     generator.begin_stream(input_ids, settings)
-
+    print()
     # Streaming loop. Note that repeated calls to sys.stdout.flush() adds some latency, but some
     # consoles won't update partial lines without it.
 

@@ -20,7 +20,7 @@ import time
 
 # Initialize model and cache
 
-model_directory = "/mnt/str/models/_gptq/TheBloke_Llama-7B-GPTQ/"
+model_directory = "/home/thomas/Development/Projects/llm/Models/Llama-2-7B-GPTQ"
 config = ExLlamaV2Config()
 config.model_dir = model_directory
 config.prepare()
@@ -35,7 +35,7 @@ cache = ExLlamaV2Cache(model)
 
 # Load LoRA
 
-lora_directory = "/mnt/str/models/_test_loras/tloen_alpaca-lora-7b/"
+lora_directory = "/home/thomas/Development/Projects/llm/Models/alpaca-lora-7b"
 lora = ExLlamaV2Lora.from_directory(model, lora_directory)
 
 # Initialize generators

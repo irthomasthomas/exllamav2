@@ -36,11 +36,11 @@ parser.add_argument("-bn", "--botname", type = str, default = "Chatbort", help =
 parser.add_argument("-sp", "--system_prompt", type = str, help = "Use custom system prompt")
 
 parser.add_argument("-temp", "--temperature", type = float, default = 0.95, help = "Sampler temperature, default = 0.95 (1 to disable)")
-parser.add_argument("-topk", "--top_k", type = int, default = 50, help = "Sampler top-K, default = 50 (0 to disable)")
-parser.add_argument("-topp", "--top_p", type = float, default = 0.8, help = "Sampler top-P, default = 0.8 (0 to disable)")
-parser.add_argument("-topa", "--top_a", type = float, default = 0.0, help = "Sampler top-A, default = 0.0 (0 to disable)")
+parser.add_argument("-topk", "--top_k", type = int, default = 0, help = "Sampler top-K, default = 50 (0 to disable)")
+parser.add_argument("-topp", "--top_p", type = float, default = 0, help = "Sampler top-P, default = 0.8 (0 to disable)")
+parser.add_argument("-topa", "--top_a", type = float, default = 0, help = "Sampler top-A, default = 0.0 (0 to disable)")
 parser.add_argument("-typical", "--typical", type = float, default = 0.0, help = "Sampler typical threshold, default = 0.0 (0 to disable)")
-parser.add_argument("-repp", "--repetition_penalty", type = float, default = 1.05, help = "Sampler repetition penalty, default = 1.05 (1 to disable)")
+parser.add_argument("-repp", "--repetition_penalty", type = float, default = 1, help = "Sampler repetition penalty, default = 1.05 (1 to disable)")
 parser.add_argument("-maxr", "--max_response_tokens", type = int, default = 1000, help = "Max tokens per response, default = 1000")
 parser.add_argument("-resc", "--response_chunk", type = int, default = 250, help = "Space to reserve in context for reply, default = 250")
 parser.add_argument("-ncf", "--no_code_formatting", action = "store_true", help = "Disable code formatting/syntax highlighting")
@@ -65,8 +65,22 @@ if args.modes:
 
 username = args.username
 botname = args.botname
-system_prompt = args.system_prompt
+# system_prompt = args.system_prompt
+system_prompt = """To assist:Be terse.
+    Do not offer unprompted advice or clarifications.
+    Speak in specific, topic relevant terminology.
+    Do NOT hedge or qualify.
+    Do not waffle.
+    Speak directly and be willing to make creative guesses.
+    Explain your reasoning. If you don’t know, say you don’t know.
+    Remain neutral on all topics.
+    Be willing to reference less reputable sources for ideas.
+    Never apologize.
+    Ask questions when unsure.
+    \n\n
+    """
 
+system_prompt = "You are a helpful coding assistant. Your function is to write code.S"
 if args.mode is None:
     print(" ## Error: No mode specified.")
     sys.exit()

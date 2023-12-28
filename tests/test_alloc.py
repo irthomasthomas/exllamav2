@@ -22,14 +22,17 @@ import torch
 # model_directory =  "/mnt/str/models/_exl2/openllama-3b-3.0bpw-h6-exl2/"
 # model_directory =  "/mnt/str/models/_exl2/llama-7b-3.0bpw-h6-exl2/"
 # model_directory =  "/mnt/str/models/_exl2/llama2-70b-chat-2.5bpw-h6-exl2/"
-model_directory = "/mnt/str/models/_exl2/codellama-34b-instruct-4.0bpw-h6-exl2/"
+#model_directory = "/mnt/str/models/_exl2/codellama-34b-instruct-4.0bpw-h6-exl2/"
+#model_directory = "/home/thomas/Development/Projects/llm/Models/OpenHermes-2.5-neural-chat-v3-3-Slerp-exl2/"
+model_directory = "/home/thomas/Development/Projects/llm/Models/deepseek-coder-6.7b-instruct-3.0bpw-h6-exl2-2/"
 
-allocation = [18, 24]
+allocation = [7, 11]
 
 
 # Prime CUDA and initialize mem measurement
 
 torch_devices = [f"cuda:{i}" for i in range(torch.cuda.device_count())]
+
 
 torch.cuda.init()
 temp = [torch.randn((1024, 1024), dtype = torch.float, device = x) for x in torch_devices]
@@ -84,13 +87,14 @@ generator = ExLlamaV2BaseGenerator(model, cache, tokenizer)
 settings = ExLlamaV2Sampler.Settings()
 settings.temperature = 0.85
 settings.top_k = 50
-settings.top_p = 0.8
+settings.top_p = 0.95
 settings.token_repetition_penalty = 1.15
 settings.disallow_tokens(tokenizer, [tokenizer.eos_token_id])
 
-prompt = "Our story begins in the Scottish town of Auchtermuchty, where once"
+prompt = "#Write a quick sort algorithm"
 
 max_new_tokens = 150
+
 
 generator.warmup()
 time_begin = time.time()
