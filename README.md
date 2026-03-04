@@ -1,3 +1,7 @@
+# Note
+
+**This project is archived for now**. Development continues on [ExLlamaV3](https://github.com/turboderp-org/exllamav3).
+
 # ExLlamaV2
 
 ExLlamaV2 is an inference library for running local LLMs on modern consumer GPUs.
